@@ -23,12 +23,14 @@
   <script src="https://api.tgtrack.ru/API/landing_script/v1/?linkID=9e2941c8863c39&type=ya&counterID=108213796" type="text/javascript" defer></script>
 </head>
 <body>
-  <style>
-    body { margin: 0; background: #0f1923; display: flex; align-items: center; justify-content: center; height: 100vh; font-family: sans-serif; }
-    a { display: inline-block; background: #2AABEE; color: #fff; text-decoration: none; padding: 16px 32px; border-radius: 8px; font-size: 18px; }
-  </style>
+  <!-- Скрытая ссылка для tgTrack -->
+  <a href="https://t.me/RUCointelegraph" id="tg-link" style="display:none;">Cointelegraph RU</a>
 
-  <!-- Ссылка на канал — tgTrack перехватит клик и запишет ClientID -->
-  <a href="https://t.me/RUCointelegraph">Перейти в Cointelegraph RU →</a>
+  <script>
+    // Даём Метрике и tgTrack 500мс зафиксировать визит, потом редиректим
+    setTimeout(function() {
+      window.location.href = "https://t.me/RUCointelegraph";
+    }, 500);
+  </script>
 </body>
 </html>
