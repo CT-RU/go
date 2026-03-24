@@ -2,7 +2,6 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0;url=https://t.me/RUCointelegraph">
   <title>Cointelegraph RU</title>
 
   <!-- Яндекс.Метрика -->
@@ -12,23 +11,53 @@
       m[i].l=1*new Date();
       k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
     })(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
     ym(108213796, "init", {
       clickmap: true,
       trackLinks: true,
-      accurateTrackBounce: true,
-      webvisor: false,
-      goals: ["telegram_subscribe"]
+      accurateTrackBounce: true
     });
-    // Фиксируем цель "переход в Telegram"
-    ym(108213796, "reachGoal", "telegram_subscribe");
-    // Редирект в Telegram
-    window.location.href = "https://t.me/RUCointelegraph";
   </script>
-  <noscript>
-    <div><img src="https://mc.yandex.ru/watch/108213796" style="position:absolute; left:-9999px;" alt="" /></div>
-  </noscript>
+  <noscript><div><img src="https://mc.yandex.ru/watch/108213796" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 </head>
 <body>
-  <p>Переходим в Telegram...</p>
+  <script>
+    // Получаем yclid из URL (Яндекс Директ добавляет автоматически)
+    function getParam(name) {
+      var url = new URL(window.location.href);
+      return url.searchParams.get(name) || "";
+    }
+
+    // Получаем ClientID из Метрики и редиректим в бота
+    function redirect() {
+      var yclid = getParam("yclid");
+      var utmSource = getParam("utm_source");
+
+      ym(108213796, "getClientID", function(clientId) {
+        // Формируем deep link: https://t.me/ctru_subscribe_bot?start=cid_XXXX--yclid_YYYY
+        var payload = "";
+        if (clientId) payload += "cid_" + clientId;
+        if (yclid) payload += (payload ? "--" : "") + "yclid_" + yclid;
+
+        var botUrl = payload
+          ? "https://t.me/ctru_subscribe_bot?start=" + encodeURIComponent(payload)
+          : "https://t.me/ctru_subscribe_bot";
+
+        // Небольшая задержка чтобы Метрика успела зафиксировать визит
+        setTimeout(function() {
+          window.location.href = botUrl;
+        }, 300);
+      });
+    }
+
+    // Запускаем после загрузки Метрики
+    window.addEventListener("load", redirect);
+  </script>
+
+  <style>
+    body { margin: 0; background: #0f1923; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    p { color: #ffffff; font-family: sans-serif; font-size: 18px; }
+  </style>
+  <p>Переходим в Cointelegraph RU...</p>
 </body>
 </html>
