@@ -1,0 +1,2 @@
+# go
+CT RU redirect
